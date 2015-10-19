@@ -1,0 +1,153 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+<meta charset="utf-8"/>
+<title>PDS | Vagas de Login</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
+<link href="{% static "global/plugins/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css"/>
+<link href="{% static "global/plugins/simple-line-icons/simple-line-icons.min.css" %}" rel="stylesheet" type="text/css"/>
+<link href="{% static "global/plugins/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css"/>
+<link href="{% static "global/plugins/uniform/css/uniform.default.css" %}" rel="stylesheet" type="text/css"/>
+<!-- END GLOBAL MANDATORY STYLES -->
+<!-- BEGIN PAGE LEVEL STYLES -->
+<link href="{% static "admin/pages/css/login.css" %}" rel="stylesheet" type="text/css"/>
+<!-- END PAGE LEVEL SCRIPTS -->
+<!-- BEGIN THEME STYLES -->
+<link href="{% static "global/css/components-rounded.css" %}" id="style_components" rel="stylesheet" type="text/css"/>
+<link href="{% static "global/css/plugins.css" %}" rel="stylesheet" type="text/css"/>
+<link href="{% static "admin/layout/css/layout.css" %}" rel="stylesheet" type="text/css"/>
+<link href="{% static "admin/layout/css/themes/default.css" %}" rel="stylesheet" type="text/css" id="style_color"/>
+<link href="{% static "admin/layout/css/custom.css" %}" rel="stylesheet" type="text/css"/>
+<!-- END THEME STYLES -->
+<link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="login">
+<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+<div class="menu-toggler sidebar-toggler">
+</div>
+<!-- END SIDEBAR TOGGLER BUTTON -->
+<!-- BEGIN LOGO -->
+<div class="logo">
+	<a href="index.html">
+	<img src="{% static "admin/layout3/img/logo-big.png" %}" alt=""/>
+	</a>
+</div>
+<!-- END LOGO -->
+<!-- BEGIN LOGIN -->
+<div class="content">
+	<!-- BEGIN LOGIN FORM -->
+	<!-- BEGIN REGISTRATION FORM -->
+	<form class="register-form" id='register-form' name='register-form'  method="POST" style="display: block;">
+	{% csrf_token %} 
+		<h3>Inscrever-se</h3>
+		<p class="hint">
+			 Qual seu perfil?
+		</p>
+			
+		{% for usuarioField in usuarioForm %}
+			<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">{{ usuarioField.label }}</label>
+				{{ usuarioField}}
+				{{ usuarioField.errors}}
+		</div>
+		
+		{% endfor %}
+		
+		<div id="form-candidato">
+			{% for candidatoField in candidatoForm %}
+			<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">{{ candidatoField.label }}</label>
+				{{ candidatoField}}
+				{{ candidatoField.errors}}
+		</div>
+		
+		{% endfor %}
+		</div>
+		<p class="hint">
+			 Digite seus dados de localização
+		</p>
+		
+		{% for enderecoField in enderecoForm %}
+			<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">{{ enderecoField.label }}</label>
+				{{ enderecoField}}
+				{{ enderecoField.errors}}
+		</div>
+		
+		{% endfor %}
+		
+		<p class="hint">
+			 Digite os detalhes da conta abaixo:
+		</p>
+		
+		{% for userField in userForm %}
+			<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">{{ userField.label }}</label>
+				{{ userField}}
+				{{ userField.errors}}
+		</div>
+		
+		{% endfor %}
+		
+
+		<div class="form-actions">
+			<a href="/accounts/login" id="register-back-btn" class="btn btn-default">Voltar</a>
+			<button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right">Cadastrar</button>
+		</div>
+	</form>
+	<!-- END REGISTRATION FORM -->
+</div>
+<div class="copyright">
+	Tec. de Análide e Desenvolvimento de Sistemas -  Vagas de Emprego
+</div>
+<!-- END LOGIN -->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="../../assets/global/plugins/respond.min.js"></script>
+<script src="../../assets/global/plugins/excanvas.min.js"></script> 
+<![endif]-->
+<script src="{% static "global/plugins/jquery.min.js"%}" type="text/javascript"></script>
+<script src="{% static "global/plugins/jquery-migrate.min.js"%}" type="text/javascript"></script>
+<script src="{% static "global/plugins/bootstrap/js/bootstrap.min.js"%}" type="text/javascript"></script>
+<script src="{% static "global/plugins/jquery.blockui.min.js"%}" type="text/javascript"></script>
+<script src="{% static "global/plugins/uniform/jquery.uniform.min.js"%}" type="text/javascript"></script>
+<script src="{% static "global/plugins/jquery.cokie.min.js"%}" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="{% static "global/plugins/jquery-validation/js/jquery.validate.min.js"%}" type="text/javascript"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="{% static "global/scripts/metronic.js"%}" type="text/javascript"></script>
+<script src="{% static "admin/layout/scripts/layout.js"%}" type="text/javascript"></script>
+<script src="{% static "admin/layout/scripts/demo.js"%}" type="text/javascript"></script>
+<script src="{% static "admin/pages/scripts/login.js" %}" type="text/javascript"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+<script>
+
+	
+function checkPerfil(){
+	if ($('input[name=tipoUser]:checked', '#register-form').val() == 'empresa')
+		$('#form-candidato').hide();
+	else
+		$('#form-candidato').show();
+}
+</script>
+<!-- END JAVASCRIPTS -->
+
+</body>
+
+<!-- END BODY -->
+</html>
