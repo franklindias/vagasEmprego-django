@@ -1,21 +1,26 @@
 from django.shortcuts import render, render_to_response, RequestContext, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User, Permission
+from django.contrib.auth.views import login
 import datetime
 from vagas.models import *
 from vagas.forms import *
 from vagas.views import *
 
 # Create your views here.
+
+
 @login_required
 def index(request):
 	user = User.objects.get(username=request.user.username)
-	usuario = Usuario.objects.get(user=user)
-
-	if (usuario.tipoUser == 'True'):
-		return redirect ('vagas.views.candidato_vagas')
+	if (user.is_staff):
+		return redirect ('/accounts/login')
 	else:
-		return redirect ('vagas.views.list_vagas')
+		usuario = Usuario.objects.get(user=user)
+		if (usuario.tipoUser == 'True'):
+			return redirect ('vagas.views.candidato_vagas')
+		else:
+			return redirect ('vagas.views.list_vagas')
 
 @login_required
 @permission_required('vagas.change_empresa', login_url='/accounts/login')
@@ -119,14 +124,16 @@ def register(request):
 				
 			return render(request, 'registration/login.html', {})
 		else:
-			return render_to_response('registration/register.html', {'userForm':formUser, 'enderecoForm':formEndereco, 'candidatoForm':formCandidato, 'usuarioForm':formUsuario}, context_instance=RequestContext(request))
+			return render_to_response('registration/register.html', {
+					'userForm':formUser, 'enderecoForm':formEndereco, 'candidatoForm':formCandidato, 'usuarioForm':formUsuario}, context_instance=RequestContext(request))
 	else:
 		userForm = UserForm()
 		enderecoForm = EnderecoForm()
 		candidatoForm = CandidatoForm()
 		usuarioForm = UsuarioForm()
-		return render(request, 'registration/register.html', {'userForm':userForm, 'enderecoForm':enderecoForm,
-											 'candidatoForm':candidatoForm, 'usuarioForm':usuarioForm})
+		return render(request, 'registration/register.html', {
+				'userForm':userForm, 'enderecoForm':enderecoForm,
+				'candidatoForm':candidatoForm, 'usuarioForm':usuarioForm})
 def login(request):
 	return render(request, 'registration/login.html', {})
 
