@@ -25,6 +25,7 @@ class Candidato(models.Model):
     
 class Empresa(models.Model):
 	usuario = models.ForeignKey(Usuario)
+	status = models.BooleanField(default=False)
 
     
 class Vaga(models.Model):

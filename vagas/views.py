@@ -1,5 +1,6 @@
 from django.shortcuts import render, render_to_response, RequestContext, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models import User, Permission
 from django.contrib.auth.views import login
 import datetime
@@ -14,7 +15,7 @@ from vagas.views import *
 def index(request):
 	user = User.objects.get(username=request.user.username)
 	if (user.is_staff):
-		return redirect ('/accounts/login')
+		return redirect ('/administracao')
 	else:
 		usuario = Usuario.objects.get(user=user)
 		if (usuario.tipoUser == 'True'):
@@ -22,6 +23,27 @@ def index(request):
 		else:
 			return redirect ('vagas.views.list_vagas')
 
+
+@login_required
+@staff_member_required
+def administracao(request):
+	empresas = Empresa.objects.all()
+	return render(request,'admin/admin.html',{'empresas':empresas})
+	
+@login_required
+@staff_member_required
+def change_status_empresa(request, idEmpresa):
+	empresa = Empresa.objects.get(id=idEmpresa)
+	if (empresa.status):
+		empresa.status = False
+	else:
+		empresa.status = True
+	empresa.save()
+
+	return redirect('/administracao')
+
+	
+	
 @login_required
 @permission_required('vagas.change_empresa', login_url='/accounts/login')
 def change_status(request, idVagaTemCandidato):
@@ -79,9 +101,9 @@ def candidato_vagas(request):
 	usuario = Usuario.objects.get(user=user)
 	candidato = Candidato.objects.get(usuario=usuario)
 	vagasPorCandidato = VagaTemCandidatos.objects.values_list('vaga').filter(candidato=candidato)
-	print (vagasPorCandidato)
-	vagas = Vaga.objects.filter(dataFechamento__range=[datetime.date.today(), "2050-01-01"]).exclude(id__in=vagasPorCandidato)
-	funcoes = Vaga.objects.values('funcao').filter(dataFechamento__range=[datetime.date.today(), "2050-01-01"]).exclude(id__in=vagasPorCandidato).distinct()
+	empresas = Empresa.objects.filter(status=True)
+	vagas = Vaga.objects.filter(dataFechamento__range=[datetime.date.today(), "2050-01-01"], empresa__in=empresas).exclude(id__in=vagasPorCandidato)
+	funcoes = Vaga.objects.values('funcao').filter(dataFechamento__range=[datetime.date.today(), "2050-01-01"], empresa__in=empresas).exclude(id__in=vagasPorCandidato).distinct()
 	return render(request, 'candidato/ver_vagas.html', {'vagas':vagas, 'funcoes':funcoes})
 
 
@@ -141,27 +163,34 @@ def login(request):
 @login_required
 @permission_required('vagas.change_empresa', login_url='/accounts/login')
 def new_vaga(request):
-	if request.method == 'POST':
-		formVaga = VagaForm(request.POST)
-		
-		if (formVaga.is_valid()):
-			print (request.user)
-			user = User.objects.get(username=request.user.username)
-			print (user.password)
-			usuario = Usuario.objects.get(user=user)
-			print(usuario.nomeCompleto)
-			empresa = Empresa.objects.get(usuario=usuario)
-			
-			vaga = formVaga.save(commit=False)
-			vaga.empresa = empresa
-			vaga.save()
-			
-			return redirect('vagas.views.list_vagas')
+	user = request.user
+	usuario = Usuario.objects.get(user=user)
+	empresa = Empresa.objects.get(usuario=usuario)
+	
+	if empresa.status:
+		if request.method == 'POST':
+			formVaga = VagaForm(request.POST)
+
+			if (formVaga.is_valid()):
+				print (request.user)
+				user = User.objects.get(username=request.user.username)
+				print (user.password)
+				usuario = Usuario.objects.get(user=user)
+				print(usuario.nomeCompleto)
+				empresa = Empresa.objects.get(usuario=usuario)
+
+				vaga = formVaga.save(commit=False)
+				vaga.empresa = empresa
+				vaga.save()
+
+				return redirect('vagas.views.list_vagas')
+			else:
+				return render_to_response('empresa/new_vaga.html', {'formVaga':formVaga}, context_instance=RequestContext(request))
 		else:
-			return render_to_response('empresa/new_vaga.html', {'formVaga':formVaga}, context_instance=RequestContext(request))
+			formVaga = VagaForm()	
+			return render(request, 'empresa/new_vaga.html', {'formVaga':formVaga})
 	else:
-		formVaga = VagaForm()	
-		return render(request, 'empresa/new_vaga.html', {'formVaga':formVaga})
+		return redirect('vagas.views.list_vagas')
 
 	
 @login_required
@@ -171,7 +200,7 @@ def list_vagas(request):
 	usuario = Usuario.objects.get(user=user)
 	empresa = Empresa.objects.get(usuario=usuario)
 	vagas = Vaga.objects.filter(empresa=empresa)
-	return render(request, 'empresa/list_vaga.html', {'vagas':vagas})
+	return render(request, 'empresa/list_vaga.html', {'vagas':vagas, 'statusEmpresa':empresa.status})
 
 @login_required
 @permission_required('vagas.change_empresa', login_url='/accounts/login')

@@ -5,25 +5,19 @@
 <div class="hor-menu ">
 	<ul class="nav navbar-nav">
 		<li class="active">
-			<a href="/empresa/vaga/list" class="iconify">
-			<i class="icon-list"></i>
-			Minhas Vagas </a>
+			<a href="/adminsitracao">Empresas</a>
 		</li>
-		<li>
-			<a href="/empresa/vaga/new" class="iconify">
-			<i class="icon-plus"></i>
-			Nova Vaga </a>
-		</li>
-
 	</ul>
+
 </div>
 {% endblock %}
 
 {% block page-title %}
-	<h1>Lista de Candidatos <small>Altere o status dos candidatos que deseja selecionar.</small></h1>
+	<h1>Adminstração <small>Ative ou desative as empresas</small></h1>
 {% endblock %}
 
 {% block page-content %}
+
 <div class="row">
 	<div class="portlet light">
 			<div class="portlet-title" style="min-width:50px;"> 
@@ -42,10 +36,10 @@
 							 NOME
 						</th>
 						<th>
-							 FORMAÇÃO
+							 DIA DO CADASTRO
 						</th>
 						<th>
-							 ÁREA DE ATUAÇÃO
+							 HORA DO CADASTRO
 						</th>
 						<th>
 							 CIDADE
@@ -63,37 +57,37 @@
 					</thead>
 					<tbody>
 
-					{% for candidato in candidatos %}
+					{% for empresa in empresas %}
 						<tr>
 
 							<td>
-								 {{candidato.candidato.usuario.nomeCompleto}}
+								 {{empresa.usuario.nomeCompleto|upper}}
 							</td>
 							<td>
-								 {{candidato.candidato.formacao}}
+								 {{empresa.usuario.user.date_joined|date:'d-m-Y' }}
 							</td>
 							<td>
-								 {{candidato.candidato.areaAtuacao}}
+								 {{empresa.usuario.user.date_joined|date:'H:i' }}
 							</td>
 
 							<td>
-								{{candidato.candidato.usuario.endereco.cidade}}
+								{{empresa.usuario.endereco.cidade }}
 							</td>
 							<td>
-								{{candidato.candidato.usuario.endereco.estado}}
+								{{empresa.usuario.endereco.estado }}
 							</td>
 							<td>
-								{% if candidato.aprovado == False %}
-									<span class="label  label-warning">
-									Aguardando</span>
+								{% if empresa.status == False %}
+									<span class="label  label-danger">
+									Desativada</span>
 
 									{% else %}
 											<span class="label  label-success">
-									Aprovado</span>
+									Ativada</span>
 								{% endif %}
 							</td>
 							<td>
-								 <a href="/empresa/vaga/candidatos/changestatus/{{candidato.id}}" class="btn btn-success uppercase">
+								 <a href="/administracao/changestatusempresa/{{empresa.id}}" class="btn btn-success uppercase">
 									<i class="fa fa-exchange"></i>
 								 </a>
 							</td>
@@ -108,6 +102,6 @@
 		</div>
 					
 	</div>
-
 {% endblock %}
 			
+

@@ -15,6 +15,8 @@
 <meta content="" name="description"/>
 <meta content="" name="author"/>
 
+<link rel="shortcut icon" href="{% static "favicon.ico" %}"/>
+
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css">
 <link href="{% static "global/plugins/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
 <link href="{% static "global/plugins/simple-line-icons/simple-line-icons.min.css" %}" rel="stylesheet" type="text/css">
@@ -48,7 +50,7 @@
 	<div class="page-header-top">
 		<div class="container">
 			<div class="page-logo">
-				<a href="index.html"><img style="margin-top:16px;" src="{% static "vagas-emprego-logo-preta.png" %}" alt="logo" class="logo-default"></a>
+				<a href="/"><img style="margin-top:16px;" src="{% static "vagas-emprego-logo-preta.png" %}" alt="logo" class="logo-default"></a>
 			</div>
 			<a href="javascript:;" class="menu-toggler"></a>
 			<div class="top-menu">
@@ -59,7 +61,7 @@
 					</li>
 					<li class="dropdown dropdown-user dropdown-dark">
 						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-						<img alt="" class="img-circle" src="{% static "admin/layout3/img/avatar9.jpg" %}">
+						<img alt="" class="img-circle" src="{% static "user-icon.png" %}">
 						<span class="username username-hide-mobile">{{user.username}}</span>
 						</a>
 						<ul class="dropdown-menu dropdown-menu-default">

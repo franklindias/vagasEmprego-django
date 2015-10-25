@@ -14,4 +14,6 @@ urlpatterns = [
 	url(r'^candidato/candidatarse/(\d+)/$', views.candidatarse),
 	url(r'^candidato/candidaturas$', views.candidaturas),
 	url(r'^candidato/candidaturas/delete/(\d+)$', views.delete_candidatura),
+	url(r'^administracao$', views.administracao),
+	url(r'^administracao/changestatusempresa/(\d+)$', views.change_status_empresa),
 ]

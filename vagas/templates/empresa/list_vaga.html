@@ -25,7 +25,12 @@
 
 {% block page-content %}
 <div class="row">
-				
+	{% if statusEmpresa == False %}
+	<div class="note note-danger">
+		<h4 class="block">Empresa Desativada!!!</h4>
+		<p> Sua empresa está desativada no momento. Aguarde até que o administrador ative-a, caso não ocorra em até 24h entre em contato.</p>
+	</div>
+	{% endif %}
 	<div class="portlet light">
 			<div class="portlet-title" style="min-width:50px;"> 
 				<div class="caption">
