@@ -6,7 +6,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8"/>
-<title>PDS | Vagas de Login</title>
+<title>PDS | Vagas de Emprego</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -40,7 +40,7 @@
 <!-- END SIDEBAR TOGGLER BUTTON -->
 <!-- BEGIN LOGO -->
 <div class="logo">
-	<a href="index.html">
+	<a href="/accounts/login">
 	<img src="{% static "vagas-emprego-logo-branca.png" %}" alt=""/>
 	</a>
 </div>
@@ -48,7 +48,7 @@
 <!-- BEGIN LOGIN -->
 <div class="content">
 	<!-- BEGIN LOGIN FORM -->
-	<form class="login-form" method="post" action="{% url 'django.contrib.auth.views.login' %}">{% csrf_token %}
+	<form class="login-form" method="post" action="{% url 'login' %}">{% csrf_token %}
 		<h3 class="form-title">Entrar</h3>
 		<div class="alert alert-danger display-hide">
 			<button class="close" data-close="alert"></button>

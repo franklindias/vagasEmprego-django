@@ -1,4 +1,5 @@
 from django import forms
+from localflavor.br.forms import BRZipCodeField
 from .models import *
 from django.contrib.auth.models import User
 from django.forms.extras.widgets import SelectDateWidget
@@ -24,7 +25,7 @@ class EnderecoForm(forms.ModelForm):
                     widget=forms.TextInput(attrs={'placeholder': 'Cidade', 'class':'form-control placeholder-no-fix'}))
 	estado = forms.CharField(label='Estado', 
                     widget=forms.TextInput(attrs={'placeholder': 'Estado', 'class':'form-control placeholder-no-fix'}))
-	cep = forms.CharField(label='Cep', 
+	cep = BRZipCodeField(label='Cep', 
                     widget=forms.TextInput(attrs={'placeholder': 'CEP', 'class':'form-control placeholder-no-fix'}))
 	
 	class Meta:

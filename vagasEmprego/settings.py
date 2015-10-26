@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'b(8b5z92qcxqd1m1y$i0uz6#^81c9o9wba!^57x3^)zcuf*90s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG=True
 
 ALLOWED_HOSTS = []
 
@@ -37,7 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'vagas'
+    'vagas',
+	'localflavor'
 )
 
 MIDDLEWARE_CLASSES = (

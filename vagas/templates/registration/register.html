@@ -6,7 +6,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8"/>
-<title>PDS | Vagas de Login</title>
+<title>PDS | Vagas de Emprego</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -40,8 +40,8 @@
 <!-- END SIDEBAR TOGGLER BUTTON -->
 <!-- BEGIN LOGO -->
 <div class="logo">
-	<a href="index.html">
-	<img src="{% static "admin/layout3/img/logo-big.png" %}" alt=""/>
+	<a href="/accounts/login">
+	<img src="{% static "vagas-emprego-logo-branca.png" %}" alt=""/>
 	</a>
 </div>
 <!-- END LOGO -->
@@ -51,7 +51,7 @@
 	<!-- BEGIN REGISTRATION FORM -->
 	<form class="register-form" id='register-form' name='register-form'  method="POST" style="display: block;">
 	{% csrf_token %} 
-		<h3>Inscrever-se</h3>
+		<h3>Inscreva-se</h3>
 		<p class="hint">
 			 Qual seu perfil?
 		</p>

@@ -15,10 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+import django.views.defaults
+from django.contrib.auth.views import login
+from django.contrib.auth.decorators import user_passes_test
+
+login_forbidden =  user_passes_test(lambda u: u.is_anonymous(), '/')
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^404/$', django.views.defaults.page_not_found),
     url(r'', include('vagas.urls')),
-	url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
+	url(r'^accounts/login/$', login_forbidden(login), name='login'),
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/accounts/login/'}),
 ]

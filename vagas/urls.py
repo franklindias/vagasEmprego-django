@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index),
+	url(r'^403/', views.error_403),
 	url(r'^accounts/register$', views.register),
 	url(r'^empresa/vaga/new$', views.new_vaga),
 	url(r'^empresa/vaga/list$', views.list_vagas),

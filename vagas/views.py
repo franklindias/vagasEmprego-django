@@ -10,6 +10,15 @@ from vagas.views import *
 
 # Create your views here.
 
+def handler404(request):
+    response = render_to_response('404.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
+
+@login_required
+def error_403(request):
+	return render(request,'403.html')
 
 @login_required
 def index(request):
@@ -45,7 +54,7 @@ def change_status_empresa(request, idEmpresa):
 	
 	
 @login_required
-@permission_required('vagas.change_empresa', login_url='/accounts/login')
+@permission_required('vagas.change_empresa', login_url='/403')
 def change_status(request, idVagaTemCandidato):
 	vagaTemCandidato = VagaTemCandidatos.objects.get(id=idVagaTemCandidato)
 	if (vagaTemCandidato.aprovado):
@@ -65,7 +74,7 @@ def delete_candidatura(request, idCandidatura):
 	return redirect('/candidato/candidaturas')
 
 @login_required
-@permission_required('vagas.change_empresa', login_url='/accounts/login')
+@permission_required('vagas.change_empresa', login_url='/403')
 def candidatos_vaga(request, idVaga):
 	vaga = Vaga.objects.get(id=idVaga)
 	candidatos = VagaTemCandidatos.objects.filter(vaga=vaga)
@@ -73,7 +82,7 @@ def candidatos_vaga(request, idVaga):
 	return render(request,'empresa/candidatos.html',{'candidatos':candidatos})
 	
 @login_required
-@permission_required('vagas.change_candidato', login_url='/accounts/login')
+@permission_required('vagas.change_candidato', login_url='/403')
 def candidaturas(request):
 	user = User.objects.get(username=request.user.username)
 	usuario = Usuario.objects.get(user=user)
@@ -83,7 +92,7 @@ def candidaturas(request):
 	
 	
 @login_required
-@permission_required('vagas.change_candidato', login_url='/accounts/login')
+@permission_required('vagas.change_candidato', login_url='/403')
 def candidatarse(request, idVaga):
 	vaga = Vaga.objects.get(id=idVaga)
 	user = User.objects.get(username=request.user.username)
@@ -95,7 +104,7 @@ def candidatarse(request, idVaga):
 	
 	
 @login_required
-@permission_required('vagas.change_candidato', login_url='/accounts/login')
+@permission_required('vagas.change_candidato', login_url='/403')
 def candidato_vagas(request):
 	user = User.objects.get(username=request.user.username)
 	usuario = Usuario.objects.get(user=user)
@@ -161,7 +170,7 @@ def login(request):
 
 
 @login_required
-@permission_required('vagas.change_empresa', login_url='/accounts/login')
+@permission_required('vagas.change_empresa', login_url='/403')
 def new_vaga(request):
 	user = request.user
 	usuario = Usuario.objects.get(user=user)
@@ -194,7 +203,7 @@ def new_vaga(request):
 
 	
 @login_required
-@permission_required('vagas.change_empresa', login_url='/accounts/login')
+@permission_required('vagas.change_empresa', login_url='/403')
 def list_vagas(request):
 	user = User.objects.get(username=request.user.username)
 	usuario = Usuario.objects.get(user=user)
@@ -203,7 +212,7 @@ def list_vagas(request):
 	return render(request, 'empresa/list_vaga.html', {'vagas':vagas, 'statusEmpresa':empresa.status})
 
 @login_required
-@permission_required('vagas.change_empresa', login_url='/accounts/login')
+@permission_required('vagas.change_empresa', login_url='/403')
 def edit_vaga(request, pk):
 	vaga = get_object_or_404(Vaga, pk=pk)
 	
@@ -219,7 +228,9 @@ def edit_vaga(request, pk):
 	else:
 		formVaga = VagaForm(instance=vaga)
 		return render(request, 'empresa/new_vaga.html', {'formVaga':formVaga})
-	
+
+@login_required
+@permission_required('vagas.change_empresa', login_url='/403')
 def delete_vaga(request, idVaga):
 	vaga = get_object_or_404(Vaga, id=idVaga)
 	vaga.delete()
