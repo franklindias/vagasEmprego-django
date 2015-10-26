@@ -54,6 +54,8 @@ Aguarde a resposta da empresa responsável. </span>
 				<th>
 					 SITUAÇÃO
 				</th>
+                <th>
+				</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -86,6 +88,12 @@ Aguarde a resposta da empresa responsável. </span>
 						{% else %}
 								<span class="label  label-success">
 						Aprovado</span>
+						{% endif %}
+					</td>
+                    <td>
+
+						{% if vaga.aprovado == True %}
+						<a class="btn btn-success" href="/candidato/vagadetalhe/{{vaga.vaga.id}}"><i class="fa fa-eye"></i></a>
 						{% endif %}
 					</td>
 				</tr>

@@ -51,6 +51,15 @@ def change_status_empresa(request, idEmpresa):
 
 	return redirect('/administracao')
 
+@login_required
+def change_password(request):
+    user = request.user
+    if request.method == 'POST':
+        user.set_password(request.POST.get('password'))
+        user.save()
+        return render(request, 'registration/login.html', {'message':'Senha Alterada com sucesso!'})
+    else:
+        return render(request,'change_password.html')
 	
 	
 @login_required
@@ -68,6 +77,8 @@ def change_status(request, idVagaTemCandidato):
 	
 	return render(request,'empresa/candidatos.html',{'candidatos':candidatos})
 
+@login_required
+@permission_required('vagas.change_candidato', login_url='/403')
 def delete_candidatura(request, idCandidatura):
 	candidatura = get_object_or_404(VagaTemCandidatos, id=idCandidatura)
 	candidatura.delete()
@@ -89,7 +100,12 @@ def candidaturas(request):
 	candidato = Candidato.objects.get(usuario=usuario)
 	vagatemcandidatos = VagaTemCandidatos.objects.filter(candidato=candidato)
 	return render(request,'candidato/candidaturas.html',{'vagatemcandidatos':vagatemcandidatos})
-	
+
+@login_required
+@permission_required('vagas.change_candidato', login_url='/403')
+def vaga_detalhe(request, id):
+	vaga = Vaga.objects.get(id=id)
+	return render(request,'candidato/vaga_detail.html',{'vaga':vaga})
 	
 @login_required
 @permission_required('vagas.change_candidato', login_url='/403')

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django import forms
 from localflavor.br.forms import BRZipCodeField
 from .models import *

@@ -1,0 +1,70 @@
+{% extends "index.html" %}
+{% load staticfiles %}
+
+{% block menuprincipal %}
+<div class="hor-menu ">
+	<ul class="nav navbar-nav">
+		<li >
+			<a href="/candidato/vagas">Vagas</a>
+		</li>
+		<li class="active">
+			<a href="/candidato/candidaturas">Candidaturas</a>
+		</li>
+
+	</ul>
+
+</div>
+{% endblock %}
+
+{% block extracss %}
+<link href="{% static "pages/css/vaga-detail.min.css" %}" rel="stylesheet" type="text/css">
+
+<style>
+    h4.profile-desc-title{
+        font-size: 25px;
+    }
+</style>
+{% endblock %}
+
+{% block page-title %}
+	<h1>Detalhes da Vaga <small>Veja os detalhes dessa vaga.</small></h1>
+{% endblock %}
+
+{% block page-content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="portlet light ">
+            <div>
+                <h4 class="profile-desc-title">{{vaga.empresa.usuario.nomeCompleto}}</h4>
+                <span class="profile-desc-text"> 
+                    {{vaga.empresa.usuario.endereco.logradouro}}, 
+                    {{vaga.empresa.usuario.endereco.bairro}} - 
+                    {{vaga.empresa.usuario.endereco.cidade}} / 
+                    {{vaga.empresa.usuario.endereco.estado}}  </span>
+                <div class="margin-top-20 profile-desc-link">
+                    <i class="fa fa-globe"></i>
+                    <a href="melito:{{vaga.empresa.usuario.user.email}}">{{vaga.empresa.usuario.user.email}}</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="portlet light ">
+            <div>
+                <h4 class="profile-desc-title">{{vaga.funcao}}</h4>
+                <span class="profile-desc-text"> 
+                    {{vaga.descricao}} </span>
+                <div class="margin-top-20 profile-desc-link">
+                    <i class="fa fa-money"></i>{{vaga.salario}}
+                </div>
+                 <div class="margin-top-20 profile-desc-link">
+                    <i class="fa fa-clock-o"></i>{{vaga.cargaHoraria}} Horas
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+			
