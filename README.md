@@ -6,6 +6,11 @@
 * Framework: Django
 * Banco de Dados: SQLite
 
+#### Domínio
+> Gerado a partir da biblioteca pygraphviz.
+
+![Image of Yaktocat](class_diagram.png)
+
 #### Telas:
 ##### Login
 ##### Dash Administração
