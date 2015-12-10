@@ -9,5 +9,5 @@
 #### Telas:
 ##### Login
 ##### Dash Administração
-##### Dash Usuário Comunu
+##### Dash Usuário Comun
 ##### Dash Empresa
