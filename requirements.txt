@@ -3,7 +3,7 @@ blivet==1.0.10
 chardet==2.2.1
 coverage==4.0a6
 decorator==3.4.0
-Django==1.8.5
+Django==1.11.28
 django-extensions==1.5.7
 django-forms-bootstrap==3.0.1
 django-grappelli==2.7.1
