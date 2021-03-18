@@ -16,7 +16,7 @@ IPy==0.81
 kitchen==1.2.1
 langtable==0.0.34
 ntplib==0.3.2
-Pillow==2.8.2
+Pillow==8.1.1
 policycoreutils-default-encoding==0.1
 psycopg2==2.5.4
 pwquality==1.2.4
